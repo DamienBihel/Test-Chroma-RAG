@@ -1,0 +1,4 @@
+chromadb
+sentence-transformers
+numpy<2
+psutil

@@ -1,11 +1,22 @@
 # Importation de la bibliothèque ChromaDB pour la gestion de bases de données vectorielles
 import chromadb
+from chromadb.utils import embedding_functions
+# Importation de SentenceTransformer pour les embeddings SBERT
+from sentence_transformers import SentenceTransformer
 
 # Création d'un client ChromaDB (point d'entrée pour manipuler les collections)
 chroma_client = chromadb.Client()
 
-# Création d'une nouvelle collection nommée "test"
-collection = chroma_client.create_collection(name="test")
+# Création d'une fonction d'embedding SBERT compatible avec ChromaDB
+sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(
+    model_name="all-MiniLM-L6-v2"
+)
+
+# Création d'une nouvelle collection nommée "test" avec fonction d'embedding SBERT
+collection = chroma_client.create_collection(
+    name="test",
+    embedding_function=sentence_transformer_ef
+)
 
 # Ajout de documents à la collection
 # Chaque document doit avoir un identifiant unique (ids) et un texte (documents)
